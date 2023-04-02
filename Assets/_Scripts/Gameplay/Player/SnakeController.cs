@@ -1,12 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Random = System.Random;
+
 
 public class SnakeController : MonoBehaviour
 {
@@ -46,12 +41,12 @@ public class SnakeController : MonoBehaviour
             _moveDir = Vector2.left;
         }
         
-        if (transform.position.x >= camBorder.x +1 || transform.position.x <= -camBorder.x)
+        if (transform.position.x >= camBorder.x  || transform.position.x <= -camBorder.x)
         {
             transform.position = new Vector3(-transform.position.x, transform.position.y);
         }
 
-        if (transform.position.y >= camBorder.y + 1 || transform.position.y <= -camBorder.y)
+        if (transform.position.y >= camBorder.y  || transform.position.y <= -camBorder.y)
         {
             transform.position = new Vector3(transform.position.x, -transform.position.y);
         }
@@ -93,15 +88,34 @@ public class SnakeController : MonoBehaviour
 
     private void ChangeFoodPosition()
     {
+        var nextFoodPos = NextFoodPos();
+        
+        for (int i = 0; i < tailList.Count; i++)
+        {
+            if (tailList[i].position == nextFoodPos)
+            {
+              ChangeFoodPosition();
+              print("Elam kuyrğunujn dışında bir yere spawn oldu");
+              return;
+            }
+            
+            food.transform.position = nextFoodPos;
+        }
+    }
+
+    private Vector3 NextFoodPos()
+    {
         var x = (int) UnityEngine.Random.Range(-camBorder.x, camBorder.x);
         var y = (int) UnityEngine.Random.Range(-camBorder.y, camBorder.y);
-        food.transform.position = new Vector3(x, y,0);
+        var nextFoodPos = new Vector3(x, y, 0);
+        return nextFoodPos;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Food"))
         {
+            LevelManager.Instance.AddScore(1);
             Grow();
             ChangeFoodPosition();
         }
