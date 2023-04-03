@@ -1,5 +1,8 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using  UnityEngine.SceneManagement;
+
 
 public class LevelManager : MonoBehaviour
 {
@@ -20,5 +23,19 @@ public class LevelManager : MonoBehaviour
    {
       score += amount;
       UIManager.Instance.ScoreTextUpdate();
+   }
+
+   public void Dead()
+   {
+     StartCoroutine(DeadSequance());
+   }
+
+   private IEnumerator DeadSequance()
+   {
+      Time.timeScale = 0;
+      yield return new WaitForSecondsRealtime(1);
+      print("dass");
+      SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+      Time.timeScale = 1;
    }
 }
