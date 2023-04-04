@@ -34,7 +34,6 @@ public class LevelManager : MonoBehaviour
    {
       Time.timeScale = 0;
       yield return new WaitForSecondsRealtime(1);
-      print("dass");
       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
       Time.timeScale = 1;
    }

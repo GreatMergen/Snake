@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &106806541
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -298,7 +298,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &293761934
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -791,7 +791,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &914054464
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1231,8 +1231,12 @@ PrefabInstance:
       objectReference: {fileID: 1250993345507460316, guid: 198dfa8207d214cf9960c1a2f90e21b8, type: 3}
     - target: {fileID: 1326624693122504915, guid: dd26d01697274402698fb8e482fdf4dc, type: 3}
       propertyPath: moveSpeed
-      value: 0.1
+      value: 0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 1326624693122504915, guid: dd26d01697274402698fb8e482fdf4dc, type: 3}
+      propertyPath: tailPrefab
+      value: 
+      objectReference: {fileID: 1250993345507460316, guid: 198dfa8207d214cf9960c1a2f90e21b8, type: 3}
     - target: {fileID: 1326624693122504915, guid: dd26d01697274402698fb8e482fdf4dc, type: 3}
       propertyPath: camBorder.x
       value: 20
@@ -1390,7 +1394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1873362725
 SpriteRenderer:
   m_ObjectHideFlags: 0

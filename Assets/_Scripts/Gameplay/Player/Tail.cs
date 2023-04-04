@@ -6,7 +6,7 @@ public class Tail : MonoBehaviour,ICollideble
 {
     private IEnumerator Start()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1);
         GetComponent<BoxCollider2D>().enabled = true;
     }
 
