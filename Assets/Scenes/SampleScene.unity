@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 106806542}
   - component: {fileID: 106806541}
   - component: {fileID: 106806543}
+  - component: {fileID: 106806544}
   m_Layer: 0
   m_Name: Wall (3)
   m_TagString: Wall
@@ -234,6 +235,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &106806544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106806540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fc6b2a7fabc4eec9b627f40579c8c4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUpBorder: 1
 --- !u!1 &284028072
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +291,7 @@ GameObject:
   - component: {fileID: 293761935}
   - component: {fileID: 293761934}
   - component: {fileID: 293761936}
+  - component: {fileID: 293761937}
   m_Layer: 0
   m_Name: Wall (1)
   m_TagString: Wall
@@ -377,6 +392,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &293761937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293761933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fc6b2a7fabc4eec9b627f40579c8c4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUpBorder: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +784,7 @@ GameObject:
   - component: {fileID: 914054465}
   - component: {fileID: 914054464}
   - component: {fileID: 914054466}
+  - component: {fileID: 914054467}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Wall
@@ -856,6 +885,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &914054467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914054463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fc6b2a7fabc4eec9b627f40579c8c4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUpBorder: 0
 --- !u!1 &920056940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,7 +1231,7 @@ PrefabInstance:
       objectReference: {fileID: 1250993345507460316, guid: 198dfa8207d214cf9960c1a2f90e21b8, type: 3}
     - target: {fileID: 1326624693122504915, guid: dd26d01697274402698fb8e482fdf4dc, type: 3}
       propertyPath: moveSpeed
-      value: 0.05
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1326624693122504915, guid: dd26d01697274402698fb8e482fdf4dc, type: 3}
       propertyPath: camBorder.x
@@ -1203,13 +1245,17 @@ PrefabInstance:
       propertyPath: appleTakeEffect
       value: 
       objectReference: {fileID: 5730377554814787647, guid: 8bd707fd114d80d4fa0621a433a5ea83, type: 3}
+    - target: {fileID: 6359818186064236515, guid: dd26d01697274402698fb8e482fdf4dc, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8900372263971402038, guid: dd26d01697274402698fb8e482fdf4dc, type: 3}
       propertyPath: m_Size.x
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 8900372263971402038, guid: dd26d01697274402698fb8e482fdf4dc, type: 3}
       propertyPath: m_Size.y
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd26d01697274402698fb8e482fdf4dc, type: 3}
@@ -1218,6 +1264,20 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2900846863070915040, guid: 55817bff9c4394ea79464e2acbc41b02, type: 3}
   m_PrefabInstance: {fileID: 600861185}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1301141745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301141741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d18d5d2ea24644388c6826a0812e68fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appleTakeEffect: {fileID: 5730377554814787647, guid: 8bd707fd114d80d4fa0621a433a5ea83, type: 3}
+  camBorder: {x: 19, y: 10}
 --- !u!1 &1528558668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,6 +1383,7 @@ GameObject:
   - component: {fileID: 1873362726}
   - component: {fileID: 1873362725}
   - component: {fileID: 1873362727}
+  - component: {fileID: 1873362728}
   m_Layer: 0
   m_Name: Wall (2)
   m_TagString: Wall
@@ -1423,6 +1484,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1873362728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873362724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fc6b2a7fabc4eec9b627f40579c8c4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUpBorder: 1
 --- !u!1 &2014989884
 GameObject:
   m_ObjectHideFlags: 0

@@ -68,8 +68,6 @@ public class SnakeController : MonoBehaviour
             position.x = Mathf.RoundToInt(position.x);
             position.y = Mathf.RoundToInt(position.y);
             transform.position = position;
-            
-            
             yield return new WaitForSeconds(moveSpeed);
         }
     }
