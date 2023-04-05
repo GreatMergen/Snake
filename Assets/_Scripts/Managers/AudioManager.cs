@@ -7,32 +7,17 @@ public class AudioManager : MonoBehaviour
 {
   public AudioSource coinSource, deathSource;
   [SerializeField] private AudioClip coinClip, deathClip;
-  public static AudioManager Instance;
-  private void Awake()
-  {
-      Instance = this;
-  }
-
   private void Start()
   {
-      LevelManager.Instance.OnDeath += PlayDeathSound;
-      Food.OnFoodTake += PlayCoinSound;
+     Events.OnGameOver.AddListener(PlayDeathSound);
+     Events.OnFoodTake.AddListener(PlayCoinSound);
   }
 
   private void OnDisable()
   {
-      LevelManager.Instance.OnDeath -= PlayDeathSound;
-      Food.OnFoodTake -= PlayCoinSound;
+      Events.OnGameOver.RemoveListener(PlayDeathSound);
+      Events.OnFoodTake.RemoveListener(PlayCoinSound);
   }
-
-  public void PlayDeathSound()
-  {
-    deathSource.PlayOneShot(deathClip);
-  }
-
-  public void PlayCoinSound()
-  {
-     // coinSource.pitch = Random.Range(0.5f, 1f);
-      coinSource.PlayOneShot(coinClip);
-  }
+  private void PlayDeathSound() => deathSource.PlayOneShot(deathClip);
+  private void PlayCoinSound() =>coinSource.PlayOneShot(coinClip);
 }

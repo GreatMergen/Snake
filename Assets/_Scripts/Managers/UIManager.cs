@@ -1,7 +1,5 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 
 public class UIManager : MonoBehaviour
@@ -9,27 +7,27 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     [SerializeField] private TextMeshPro scoreText;
     [SerializeField] private GameObject startTexts;
-    private void Awake()
-    {
-        Instance = this;
-    }
-
+    [SerializeField] private TextMeshPro highScoreText; 
+    private void Awake() =>  Instance = this;
     private void OnEnable()
-    {
-        LevelManager.Instance.OnDeath += EnableStartTexts;
+    { 
+        Events.OnGameStart.AddListener(EnableStartTexts);
+        Events.OnGameStart.AddListener(HighScoreTextUpdate);
+        Events.OnGameOver.AddListener(GameOverTextUpdate);
+        Events.OnGameOver.AddListener(HighScoreTextUpdate);
     }
 
     private void OnDisable()
     {
-        LevelManager.Instance.OnDeath -= EnableStartTexts;
+        Events.OnGameStart.RemoveListener(EnableStartTexts);
+        Events.OnGameStart.RemoveListener(HighScoreTextUpdate);
+        Events.OnGameOver.RemoveListener(GameOverTextUpdate);
+        Events.OnGameOver.RemoveListener(HighScoreTextUpdate);
+       
     }
 
-    public void EnableStartTexts()
-    {
-        startTexts.SetActive(!startTexts.activeSelf);
-    }
-    public void ScoreTextUpdate()
-    {
-        scoreText.text = LevelManager.Instance.score.ToString();
-    }
+    private void EnableStartTexts() =>startTexts.SetActive(!startTexts.activeSelf);
+    private void GameOverTextUpdate() =>startTexts.SetActive(!startTexts.activeSelf);
+    public void ScoreTextUpdate() => scoreText.text = LevelManager.Instance.score.ToString();
+    public void HighScoreTextUpdate() => highScoreText.text = SaveManager.Instance.LoadHighScore().ToString();
 }
