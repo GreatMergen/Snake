@@ -1,8 +1,4 @@
-using System;
 using UnityEngine;
-using DG.Tweening;
-using Random = UnityEngine.Random;
-
 public class Food : MonoBehaviour,ICollideble
 { 
         [SerializeField] private GameObject appleTakeEffect;
@@ -34,7 +30,6 @@ public class Food : MonoBehaviour,ICollideble
         public void Collide(SnakeController snakeController)
         {
                 Events.OnFoodTake.Invoke();
-                Camera.main.transform.DOShakePosition(1, .05f);
                 Instantiate(appleTakeEffect, transform.position,Quaternion.identity);
                 ChangeFoodPosition(snakeController);
         }

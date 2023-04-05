@@ -67,13 +67,14 @@ public class SnakeController : MonoBehaviour
         Vector2 inputDir = new Vector2(hor, ver);
         Vector2 tempMoveDir = Vector2.zero;
 
-        if (inputDir.x >= 1) tempMoveDir = Vector2.right;
-        else if (inputDir.x <= -1) tempMoveDir = Vector2.left;
-        else if (inputDir.y >= 1 ) tempMoveDir = Vector2.up;
-        else if (inputDir.y <= -1 )  tempMoveDir = Vector2.down;
-        if (Vector2.Dot(_moveDir, tempMoveDir) > -0.9f && tempMoveDir != Vector2.zero)   _moveDir = tempMoveDir;
+        if (inputDir.x >= 1 && tempMoveDir != Vector2.left) tempMoveDir = Vector2.right;
+        else if (inputDir.x <= -1 && tempMoveDir != Vector2.right) tempMoveDir = Vector2.left;
+        else if (inputDir.y >= 1 && tempMoveDir != Vector2.down) tempMoveDir = Vector2.up;
+        else if (inputDir.y <= -1 && tempMoveDir != Vector2.up)  tempMoveDir = Vector2.down;
+        if (Vector2.Dot(_moveDir, tempMoveDir) > -0.9f && tempMoveDir != Vector2.zero)  _moveDir = tempMoveDir;
     }
-    IEnumerator MoveRoutine()
+
+    private IEnumerator MoveRoutine()
     {
         while (true)
         {
