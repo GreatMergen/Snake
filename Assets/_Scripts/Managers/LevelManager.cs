@@ -7,11 +7,22 @@ using  UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
    public static LevelManager Instance;
-
+   public event Action OnDeath;
+   
    public int score;
    private void Awake()
    {
       Instance = this;
+   }
+
+   private void OnEnable()
+   {
+      Food.OnFoodTake += AddScore;
+   }
+
+   private void OnDisable()
+   {
+      Food.OnFoodTake -= AddScore;
    }
 
    private void Start()
@@ -19,9 +30,19 @@ public class LevelManager : MonoBehaviour
       UIManager.Instance.ScoreTextUpdate();
    }
 
-   public void AddScore(int amount)
+   private void Update()
    {
-      score += amount;
+      CanRestart();
+   }
+
+
+   private bool CanRestart()
+   {
+      return Input.anyKeyDown;
+   }
+   public void AddScore()
+   {
+      score ++;
       UIManager.Instance.ScoreTextUpdate();
    }
 
@@ -32,9 +53,13 @@ public class LevelManager : MonoBehaviour
 
    private IEnumerator DeadSequance()
    {
+      OnDeath?.Invoke();
       Time.timeScale = 0;
       yield return new WaitForSecondsRealtime(1);
+      yield return new WaitUntil(CanRestart);
       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
       Time.timeScale = 1;
    }
+
+  
 }

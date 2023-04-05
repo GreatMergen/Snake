@@ -7,6 +7,7 @@ public class Food : MonoBehaviour,ICollideble
 { 
         [SerializeField] private GameObject appleTakeEffect;
         public Vector2 camBorder;
+        public static event Action OnFoodTake;
         private void ChangeFoodPosition(SnakeController snakeController)
         {
                 var nextFoodPos = NextFoodPos();
@@ -35,10 +36,9 @@ public class Food : MonoBehaviour,ICollideble
 
         public void Collide(SnakeController snakeController)
         {
+                OnFoodTake?.Invoke();
                 Camera.main.transform.DOShakePosition(1, .05f);
                 Instantiate(appleTakeEffect, transform.position,Quaternion.identity);
-                LevelManager.Instance.AddScore(1);
-                snakeController.Grow();
                 ChangeFoodPosition(snakeController);
         }
 }

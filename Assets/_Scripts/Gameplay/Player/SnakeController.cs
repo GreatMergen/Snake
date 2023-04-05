@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +11,22 @@ public class SnakeController : MonoBehaviour
     public List<Transform> tailList = new List<Transform>();
     private Vector2 _moveDir;
     private ScreenBound _screenBound;
-    
+    private bool _canInput;
+    private bool _canMove;
+
+    private void OnEnable()
+    {
+        Food.OnFoodTake += Grow;
+    }
+
+    private void OnDisable()
+    {
+        Food.OnFoodTake -= Grow;
+    }
+
     private void Start()
     {
+        
         _moveDir = Vector2.right;
         tailList.Add(transform);
         StartCoroutine(MoveRoutine());
@@ -22,6 +36,12 @@ public class SnakeController : MonoBehaviour
     {
         Movement();
         EdgeTeleport();
+
+        if (Input.anyKeyDown)
+        {
+            _canMove = true;
+            UIManager.Instance.EnableStartTexts();
+        }
     }
     private void EdgeTeleport()
     {
@@ -65,19 +85,19 @@ public class SnakeController : MonoBehaviour
         Vector2 inputDir = new Vector2(hor, ver);
         Vector2 tempMoveDir = Vector2.zero;
 
-        if (inputDir.x >= 1)
+        if (inputDir.x >= 1 && _canInput)
         {
             tempMoveDir = Vector2.right;
         }
-        else if (inputDir.x <= -1)
+        else if (inputDir.x <= -1 && _canInput)
         {
             tempMoveDir = Vector2.left;
         }
-        else if (inputDir.y >= 1)
+        else if (inputDir.y >= 1 && _canInput)
         {
             tempMoveDir = Vector2.up;
         }
-        else if (inputDir.y <= -1)
+        else if (inputDir.y <= -1 && _canInput)
         {
             tempMoveDir = Vector2.down;
         }
@@ -86,10 +106,15 @@ public class SnakeController : MonoBehaviour
         {
             _moveDir = tempMoveDir;
         }
+
+        if (Input.anyKeyDown)
+        {
+            _canInput = false;
+        }
     }
     IEnumerator MoveRoutine()
     {
-        while (true)
+        while (_canMove)
         {
             for (int i = tailList.Count-1; i > 0; i--)
             {
@@ -102,6 +127,7 @@ public class SnakeController : MonoBehaviour
             position.y = Mathf.RoundToInt(position.y);
             transform.position = position;
             yield return new WaitForSeconds(moveSpeed);
+            _canInput = true;
         }
     }
     public void Grow()
