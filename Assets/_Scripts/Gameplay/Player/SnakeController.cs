@@ -9,7 +9,8 @@ public class SnakeController : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private GameObject tailPrefab;
     public List<Transform> tailList = new List<Transform>();
-    private Vector2 _moveDir;
+    public Vector2 direction = Vector2.right;
+    private Vector2 input;
     private ScreenBound _screenBound;
     private void OnEnable()
     { 
@@ -23,9 +24,8 @@ public class SnakeController : MonoBehaviour
     }
     private void Start()
     {
-        _moveDir = Vector2.zero;
+        direction = Vector2.zero;
         tailList.Add(transform);
-        StartCoroutine(MoveRoutine());
         _screenBound = new ScreenBound(Camera.main);
     }
     private void Update()
@@ -33,13 +33,23 @@ public class SnakeController : MonoBehaviour
         Movement();
         EdgeTeleport();
     }
-
-
+    private void FixedUpdate()
+    {
+        if (input != Vector2.zero) {
+            direction = input;
+        }
+        for (int i = tailList.Count - 1; i > 0; i--) {
+            tailList[i].position = tailList[i - 1].position;
+        }
+        
+        float x = Mathf.Round(transform.position.x) + direction.x;
+        float y = Mathf.Round(transform.position.y) + direction.y;
+        transform.position = new Vector2(x, y);
+    }
     private void EnableSnakeController()
     {
-        _moveDir =Vector2.right;
+        input =Vector2.right;
     }
-
     private void EdgeTeleport()
     {
         if (transform.position.x > _screenBound.bounds.x) SetPositionX(-_screenBound.bounds.x);
@@ -61,35 +71,21 @@ public class SnakeController : MonoBehaviour
     }
     private void Movement()
     {
-        var hor = Input.GetAxisRaw("Horizontal");
-        var ver = Input.GetAxisRaw("Vertical");
-
-        Vector2 inputDir = new Vector2(hor, ver);
-        Vector2 tempMoveDir = Vector2.zero;
-
-        if (inputDir.x >= 1 && tempMoveDir != Vector2.left) tempMoveDir = Vector2.right;
-        else if (inputDir.x <= -1 && tempMoveDir != Vector2.right) tempMoveDir = Vector2.left;
-        else if (inputDir.y >= 1 && tempMoveDir != Vector2.down) tempMoveDir = Vector2.up;
-        else if (inputDir.y <= -1 && tempMoveDir != Vector2.up)  tempMoveDir = Vector2.down;
-        if (Vector2.Dot(_moveDir, tempMoveDir) > -0.9f && tempMoveDir != Vector2.zero)  _moveDir = tempMoveDir;
-    }
-
-    private IEnumerator MoveRoutine()
-    {
-        while (true)
+        if (direction.x != 0f)
         {
-            for (int i = tailList.Count-1; i > 0; i--)
-            {
-                tailList[i].position = tailList[i - 1].position;
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
+                input = Vector2.up;
+            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
+                input = Vector2.down;
             }
-
-            var position = transform.position; 
-            position += (Vector3)_moveDir;
-            position.x = Mathf.RoundToInt(position.x);
-            position.y = Mathf.RoundToInt(position.y);
-            transform.position = position;
-            yield return new WaitForSeconds(moveSpeed);
-           
+        }
+        else if (direction.y != 0f)
+        {
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
+                input = Vector2.right;
+            } else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+                input = Vector2.left;
+            }
         }
     }
     private void Grow()
